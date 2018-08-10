@@ -31,7 +31,7 @@ while True: #rerun
 
             currentlinkno = 0 #set up the integer to be passed to the feed entry to start at the first feed, then iterate
 
-            l = feed.entries[currentlinkno].enclosures[0].href
+            l = feed.entries[currentlinkno].enclosures[0].href #see feedparser documentation (https://pythonhosted.org/feedparser/reference-entry-enclosures.html#)
             t = feed.entries[currentlinkno].title
                         
             print("\nAlright, so now it's time to select the episode of <" + dictkey + "> you want to download. \n \n\
