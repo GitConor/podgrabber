@@ -23,14 +23,25 @@ def main():
         current_link_no = 0 #set up the integer to be passed to the feed entry to start at the first feed, then iterate
 
         key_inputs = [] #set up a list of podcasts to download, one by one
-        first_key_input = input("\n Type any one of these names to select the podcast I will help you download:\n\
-                   \n =>   #Insert Pod Name 1 =>    #Insert Pod Name 2\
-                 \n\n =>   #Insert Pod Name 3 =>    #Insert Pod Name 4\ \n\n")
+
+        pod_options = list(POD_URL_DICT.keys())
+
+        print ("Here are your podcast options today: \n")
+
+        for x in pod_options:
+            print('==> ' + x)
+            
+        first_key_input = input("\n Type any one of these names to select the podcast I will help you download:\n\n")
 
         key_inputs.append(first_key_input) #each podcast is appended to the podcast list
 
+        print("\nGreat! \n\n** If ** you'd like to select another, here the same list again: \n")
+
+        for x in pod_options:
+            print('==> ' + x)
+
         while True: #continue appending until user types "READY"
-            next_key_input = input("\nGreat!\n\n** If ** you'd like to select another podcast as well, type in the next podcast's name. \n\n\
+            next_key_input = input("\nTo add another podcast, just type its name. \n\n\
 (I'll ask again, so you can keep entering one name per ask.) \n\nOtherwise, type <READY> in ALL CAPS and I can help you pick (an) episode(s). \n\n")
             if next_key_input != "READY":
                 key_inputs.append(next_key_input)
@@ -50,7 +61,8 @@ def main():
                         
                 print("\nAlright, so now it's time to select the episode of <" + dict_key + "> you want to download. \n \n\
 The most recent episode is entitled <" + title + ">, \n\nand its URL is: <" + link + "> \n") #I print out the URL just in case it contains useful
-                                                                                      #info, for example when choosing a filename.
+                                                                                             #info, for example when choosing a filename.
+
             #Index error may be due to an RSS entry that summarizes the entire show and therefore contains no mp3
             #so move on from the 0th to the 1th entry and rerun
             except IndexError: 
