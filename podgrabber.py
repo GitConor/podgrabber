@@ -1,6 +1,6 @@
 import re
 import urllib.request
-import feedparser
+import feedparser #hat tip to feedparser -- really useful!
 import shutil
 import eyed3
 
