@@ -86,11 +86,11 @@ The next most recent episode of <" + dict_key + "> is entitled <" + feed.entries
 Same drill . . . \n")
                     continue
                 if download_next_or_nix == "DOWNLOAD":
-                    pod_folder = "C:\\Users\\#Insert Windows User Name\\Music\\iTunes\\iTunes Media\\Automatically Add to iTunes\\"
+                    pod_folder = "C:\\Users\\INSERTUSERNAMERIGHTHERE\\Music\\iTunes\\iTunes Media\\Automatically Add to iTunes\\" #Replace INSERTUSERNAMERIGHTHERE w/ your Windows User Name
                     file_name = input("\nLast step for this episode: pick a file name to find it in iTunes. \n\n\
 (Don't add the filetype <.mp3> to your answer.) \n\n")  
                     file_address = pod_folder + file_name + ".mp3"
-                    stage_folder = "C:\\Users\\#Insert Windows User Name\\Desktop\\"
+                    stage_folder = "C:\\Users\\INSERTUSERNAMERIGHTHERE\\Desktop\\" #Replace INSERTUSERNAMERIGHTHERE w/ your Windows User Name
                     stage_address = stage_folder+"temporaryname.mp3"
                     
                     #Download MP3 podcast with urllib
