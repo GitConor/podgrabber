@@ -41,6 +41,10 @@ def main():
             print('==> ' + x)
 
         while True: #continue appending until user types "READY"
+
+            for x in pod_options:
+                print(' ==> ' + x)
+
             next_key_input = input("\nTo add another podcast, just type its name. \n\n\
 (I'll ask again, so you can keep entering one name per ask.) \n\nOtherwise, type <READY> in ALL CAPS and I can help you pick (an) episode(s). \n\n")
             if next_key_input != "READY":
@@ -56,6 +60,8 @@ def main():
 
                 feed = feedparser.parse(pod_val) #pass the podcast rss url to feedparser.parse
 
+                current_link_no = 0
+                
                 link = feed.entries[current_link_no].enclosures[0].href #see feedparser documentation (https://pythonhosted.org/feedparser/reference-entry-enclosures.html#)
                 title = feed.entries[current_link_no].title
                         
@@ -71,7 +77,6 @@ The most recent episode is entitled <" + title + ">, \n\nand its URL is: <" + li
                 title = feed.entries[current_link_no].title
                 print("\nAlright, it's time to select the episode of <" + dict_key + "> you want to download. \n \n\
 The most recent episode is entitled <" + title + ">, \n\nand its URL is: <" + link + ">.")
-                pass
     
             whilename = " "
             while True:
@@ -81,10 +86,18 @@ The most recent episode is entitled <" + title + ">, \n\nand its URL is: <" + li
 3) And if you don't want to download this podcast anymore at all, type <NOT THIS POD> in ALL CAPS. \n\n") #Lets user download episode, look at next episode, or move on to next podcast/exit program
                 if download_next_or_nix == "NEXT EPISODE":
                     current_link_no += 1
-                    print("\nNext! \n\n\
+                    try:
+                        print("\nNext! \n\n\
 The next most recent episode of <" + dict_key + "> is entitled <" + feed.entries[current_link_no].title + ">, \n \n and its URL is: <" + feed.entries[current_link_no].enclosures[0].href + ">. \n\n\
 Same drill . . . \n")
-                    continue
+                        continue
+                    except IndexError:
+                        current_link_no += 1
+                        link = feed.entries[current_link_no].enclosures[0].href
+                        title = feed.entries[current_link_no].title
+                        print("\nAlright, so now it's time to select the episode of <" + dict_key + "> you want to download. \n \n\
+The next most recent episode is entitled <" + title + ">, \n\nand its URL is: <" + link + ">.")
+                        continue
                 if download_next_or_nix == "DOWNLOAD":
                     pod_folder = "C:\\Users\\INSERTUSERNAMERIGHTHERE\\Music\\iTunes\\iTunes Media\\Automatically Add to iTunes\\" #Replace INSERTUSERNAMERIGHTHERE w/ your Windows User Name
                     file_name = input("\nLast step for this episode: pick a file name to find it in iTunes. \n\n\
@@ -95,6 +108,7 @@ Same drill . . . \n")
                     
                     #Download MP3 podcast with urllib
                     urllib.request.urlretrieve(feed.entries[current_link_no].enclosures[0].href, stage_address) 
+
                     try:
                         audio = eyed3.load(stage_address)
                         eyed3.log.setLevel("ERROR")
@@ -108,13 +122,14 @@ Same drill . . . \n")
                     shutil.copy2(stage_address, file_address)
                     print("\nEpisode Downloaded.")
                     break
+                
                 if download_next_or_nix == "NOT THIS POD":
                     print("\nNo worries!")
                     break
 
         answer = input("\nAnd we are all set. Type CLOSE in ALL CAPS to exit, or type literally anything else to run again. \n\n")
         if answer == "CLOSE":
-                break
+            exit()
 
 if __name__ == "__main__":
     main()
